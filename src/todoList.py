@@ -65,6 +65,7 @@ def put_item(text, dynamodb=None):
     try:
         # write the todo to the database
         table.put_item(Item=item)
+        print('[todo-list-aws][put_item]: inserted item!')
         # create a response
         response = {
             "statusCode": 200,
@@ -100,7 +101,7 @@ def update_item(key, text, checked, dynamodb=None):
                              'updatedAt = :updatedAt',
             ReturnValues='ALL_NEW',
         )
-
+        print('[todo-list-aws][update_item]: Updated item!')
     except ClientError as e:
         print(e.response['Error']['Message'])
     else:
@@ -150,6 +151,7 @@ def create_todo_table(dynamodb):
             'WriteCapacityUnits': 1
         }
     )
+    print('[todo-list-aws][create_todo_table]: Created')
 
     # Wait until the table exists.
     table.meta.client.get_waiter('table_exists').wait(TableName=tableName)
