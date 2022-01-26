@@ -37,7 +37,8 @@ def get_item(key, dynamodb=None):
     else:
         print('Result getItem:'+str(result))
         if 'Item' in result:
-            return result['Item']
+            item = result['Item']
+            return item
 
 
 def get_items(dynamodb=None):
@@ -45,7 +46,8 @@ def get_items(dynamodb=None):
     table = get_table(dynamodb)
     # fetch todo from the database
     result = table.scan()
-    return result['Items']
+    items = result['Items']
+    return items
 
 
 def put_item(text, dynamodb=None):
@@ -102,7 +104,8 @@ def update_item(key, text, checked, dynamodb=None):
     except ClientError as e:
         print(e.response['Error']['Message'])
     else:
-        return result['Attributes']
+        updatedAttributes = result['Attributes']
+        return updatedAttributes
 
 
 def delete_item(key, dynamodb=None):
@@ -119,6 +122,7 @@ def delete_item(key, dynamodb=None):
     except ClientError as e:
         print(e.response['Error']['Message'])
     else:
+        print('[todo-list-aws][delete_item]: removed Item')
         return
 
 
