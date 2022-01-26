@@ -8,6 +8,7 @@ from botocore.exceptions import ClientError
 
 
 def get_table(dynamodb=None):
+    print('[todo-list-aws][get_table]')
     if not dynamodb:
         URL = os.environ['ENDPOINT_OVERRIDE']
         if URL:
@@ -22,6 +23,7 @@ def get_table(dynamodb=None):
 
 
 def get_item(key, dynamodb=None):
+    print('[todo-list-aws][get_item]')
     table = get_table(dynamodb)
     try:
         result = table.get_item(
@@ -39,6 +41,7 @@ def get_item(key, dynamodb=None):
 
 
 def get_items(dynamodb=None):
+    print('[todo-list-aws][get_items]')
     table = get_table(dynamodb)
     # fetch todo from the database
     result = table.scan()
@@ -46,6 +49,7 @@ def get_items(dynamodb=None):
 
 
 def put_item(text, dynamodb=None):
+    print('[todo-list-aws][put_item]')
     table = get_table(dynamodb)
     timestamp = str(time.time())
     print('Table name:' + table.name)
@@ -72,6 +76,7 @@ def put_item(text, dynamodb=None):
 
 
 def update_item(key, text, checked, dynamodb=None):
+    print('[todo-list-aws][update_item]')
     table = get_table(dynamodb)
     timestamp = int(time.time() * 1000)
     # update the todo in the database
@@ -101,6 +106,7 @@ def update_item(key, text, checked, dynamodb=None):
 
 
 def delete_item(key, dynamodb=None):
+    print('[todo-list-aws][delete_item]')
     table = get_table(dynamodb)
     # delete the todo from the database
     try:
@@ -117,6 +123,7 @@ def delete_item(key, dynamodb=None):
 
 
 def create_todo_table(dynamodb):
+    print('[todo-list-aws][create_todo_table]')
     # For unit testing
     tableName = os.environ['DYNAMODB_TABLE']
     print('Creating Table with name:' + tableName)
